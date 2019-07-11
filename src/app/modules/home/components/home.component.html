@@ -1,0 +1,70 @@
+<div>
+
+    <h3>Photo - Source Of Truth</h3>
+    <span style="color:red;" *ngIf="message">{{message}}</span>
+    <input #searchBox type='text' id="txt_search_term" name="url" placeholder="Enter Url of the image"> <button
+        type="submit" (click)="verify(searchBox.value)">Verify</button>
+        <button
+        type="submit" (click)="search(searchBox.value)">Search</button>
+    <!--<input #file type="file" accept='image/*' (change)="preview(file.files)" />-->
+    <img [src]="imgURL" height="200" *ngIf="imgURL" id="img">
+</div>
+<div>
+    <h1>Verified Info</h1>
+    <ng-container *ngIf="newsItemInfo">
+
+            <div class="row no-gutters mt-3">
+              
+                        <div> 
+                            <img src="{{newsItemInfo.url}}"/>
+                        </div>
+                   <p>
+                        {{newsItemInfo.id}}
+                   </p>
+                   <p>
+                        {{newsItemInfo.title}}
+                   </p>
+                   <p>
+                        {{newsItemInfo.Author.name}}
+                   </p>
+                   <p>
+                        {{newsItemInfo.description}}
+                   </p>
+               
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(!newsItemInfo) && searchBox.value.length>0">
+            <div>
+                Your image doesnt match with our search or not verified.
+            </div>
+        </ng-container>
+</div>
+<div>
+  <ng-container *ngIf="userInfo">
+        <h1>Simillar Items</h1>
+        <div class="row no-gutters mt-3">
+            <ng-container *ngFor="let newsItem of userInfo?.contentRegistryItem, let i = index">
+                    <div> 
+                        <img src="{{newsItem.url}}"/>
+                    </div>
+               <p>
+                    {{newsItem.id}}
+               </p>
+               <p>
+                    {{newsItem.title}}
+               </p>
+               <p>
+                    {{newsItem.Author.name}}
+               </p>
+               <p>
+                    {{newsItem.description}}
+               </p>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="(!userInfo || userInfo.contentRegistryItem.length==0) && searchBox.value.length>0">
+        <div>
+            Your image doesnt match with our search or not verified.
+        </div>
+    </ng-container>
+</div>
