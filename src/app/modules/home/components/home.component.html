@@ -1,68 +1,110 @@
-<div>
+<div class="main-container">
+    <div id="masthead">
+        <header id="header_main" class="main" role="banner">
+            <nav id="header_main_nav">
+                <ul class="upper-block">
+                    <li id="title_nav" class="product-title">PHOTO-SOURCE OF TRUTH</li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div class="content">
+        <section class="full-width">
+            <div class="left">
+                <div class="form-group">
+                    <label for="url">Enter the image url</label>
+                    <input #searchBox type="text" formControlName="url" id="txt_search_term" name="url"
+                        placeholder="Enter Url of the image" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" (click)="verify(searchBox.value)">Verify</button>
+                    <button class="btn btn-secondary" type="submit" (click)="search(searchBox.value)">Search</button>
+                    <img *ngIf="loading"
+                        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                </div>
+            </div>
+            <div class="right">
+                <img [src]="imgURL" height="200" *ngIf="imgURL" id="img">
+            </div>
+        </section>
+        <div class="form-group">
+            <ng-container *ngIf="verifiedNewsItemInfo && verifyItem">
+                <h2>Verified Info</h2>
+                <section class="full-width results">
+                    <div class="left">
+                        <div class="form-group">
+                            <img src="{{verifiedNewsItemInfo.url}}" width="200" />
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="form-group">
+                            <h5>
+                                {{verifiedNewsItemInfo.title}}
+                            </h5>
 
-    <h3>Photo - Source Of Truth</h3>
-    <span style="color:red;" *ngIf="message">{{message}}</span>
-    <input #searchBox type='text' id="txt_search_term" name="url" placeholder="Enter Url of the image"> <button
-        type="submit" (click)="verify(searchBox.value)">Verify</button>
-        <button
-        type="submit" (click)="search(searchBox.value)">Search</button>
-    <!--<input #file type="file" accept='image/*' (change)="preview(file.files)" />-->
-    <img [src]="imgURL" height="200" *ngIf="imgURL" id="img">
-</div>
-<div>
-    <ng-container *ngIf="verifiedNewsItemInfo">
-        <h1>Verified Info</h1>
-            <div class="row no-gutters mt-3">
-                    <div> 
-                        <img src="{{verifiedNewsItemInfo.url}}"/>
+                            <p>
+                                {{verifiedNewsItemInfo.Author.name}}
+                            </p>
+                            <p>
+                                {{verifiedNewsItemInfo.rightsModel.name}}
+                                {{verifiedNewsItemInfo.rightsModel.restrictions}}
+                            </p>
+                            <p>
+                                {{verifiedNewsItemInfo.publishedDateTime}}
+                            </p>
+                            <p>
+                                {{verifiedNewsItemInfo.description}}
+                            </p>
+                        </div>
                     </div>
-                   <p>
-                        {{verifiedNewsItemInfo.id}}
-                   </p>
-                   <p>
-                        {{verifiedNewsItemInfo.title}}
-                   </p>
-                   <p>
-                        {{verifiedNewsItemInfo.Author.name}}
-                   </p>
-                   <p>
-                        {{verifiedNewsItemInfo.description}}
-                   </p>
-               
-            </div>
-        </ng-container>
-        <ng-container *ngIf="(!verifiedNewsItemInfo) && searchBox.value.length>0">
-            <div>
-                Your image doesnt match with our search or not verified.
-            </div>
-        </ng-container>
-</div>
-<div>
-  <ng-container *ngIf="searchResultInfo">
-        <h1>Simillar Items</h1>
-        <div class="row no-gutters mt-3">
-            <ng-container *ngFor="let newsItem of searchResultInfo?.contentRegistryItem, let i = index">
-                    <div> 
-                        <img src="{{newsItem.url}}"/>
-                    </div>
-               <p>
-                    {{newsItem.id}}
-               </p>
-               <p>
-                    {{newsItem.title}}
-               </p>
-               <p>
-                    {{newsItem.Author.name}}
-               </p>
-               <p>
-                    {{newsItem.description}}
-               </p>
+                </section>
+            </ng-container>
+            <ng-container *ngIf="(!verifiedNewsItemInfo) && searchBox.value.length>0 && !loading && verifyItem">
+                <div>
+                    Your image doesnt match with our search or not verified.
+                </div>
             </ng-container>
         </div>
-    </ng-container>
-    <ng-container *ngIf="(!searchResultInfo || searchResultInfo.contentRegistryItem.length==0) && searchBox.value.length>0">
         <div>
-            Your image doesnt match with our search or not verified.
+            <ng-container *ngIf="searchResultInfo && searchItem">
+                <h2>Simillar Items</h2>
+                <div class="row no-gutters mt-3">
+                    <ng-container *ngFor="let newsItem of searchResultInfo?.contentRegistryItem, let i = index">
+                        <section class="full-width results">
+                            <div class="left">
+                                <div class="form-group">
+                                    <img src="{{newsItem.url}}" width="200" />
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="form-group">
+                                    <h5>
+                                        {{newsItem.title}}
+                                    </h5>
+
+                                    <p>
+                                        {{newsItem.Author.name}}
+                                    </p>
+                                    <p>
+                                        {{newsItem.rightsModel.name}} {{newsItem.rightsModel.restrictions}}
+                                    </p>
+                                    <p>
+                                        {{newsItem.publishedDateTime}}
+                                    </p>
+                                    <p>
+                                        {{newsItem.description}}
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="(!searchResultInfo) && searchBox.value.length>0 && !loading && searchItem">
+                <div>
+                    Your image doesnt match with our search or not verified.
+                </div>
+            </ng-container>
         </div>
-    </ng-container>
-</div>
+    </div>
