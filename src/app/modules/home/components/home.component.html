@@ -10,40 +10,38 @@
     <img [src]="imgURL" height="200" *ngIf="imgURL" id="img">
 </div>
 <div>
-    <h1>Verified Info</h1>
-    <ng-container *ngIf="newsItemInfo">
-
+    <ng-container *ngIf="verifiedNewsItemInfo">
+        <h1>Verified Info</h1>
             <div class="row no-gutters mt-3">
-              
-                        <div> 
-                            <img src="{{newsItemInfo.url}}"/>
-                        </div>
+                    <div> 
+                        <img src="{{verifiedNewsItemInfo.url}}"/>
+                    </div>
                    <p>
-                        {{newsItemInfo.id}}
+                        {{verifiedNewsItemInfo.id}}
                    </p>
                    <p>
-                        {{newsItemInfo.title}}
+                        {{verifiedNewsItemInfo.title}}
                    </p>
                    <p>
-                        {{newsItemInfo.Author.name}}
+                        {{verifiedNewsItemInfo.Author.name}}
                    </p>
                    <p>
-                        {{newsItemInfo.description}}
+                        {{verifiedNewsItemInfo.description}}
                    </p>
                
             </div>
         </ng-container>
-        <ng-container *ngIf="(!newsItemInfo) && searchBox.value.length>0">
+        <ng-container *ngIf="(!verifiedNewsItemInfo) && searchBox.value.length>0">
             <div>
                 Your image doesnt match with our search or not verified.
             </div>
         </ng-container>
 </div>
 <div>
-  <ng-container *ngIf="userInfo">
+  <ng-container *ngIf="searchResultInfo">
         <h1>Simillar Items</h1>
         <div class="row no-gutters mt-3">
-            <ng-container *ngFor="let newsItem of userInfo?.contentRegistryItem, let i = index">
+            <ng-container *ngFor="let newsItem of searchResultInfo?.contentRegistryItem, let i = index">
                     <div> 
                         <img src="{{newsItem.url}}"/>
                     </div>
@@ -62,7 +60,7 @@
             </ng-container>
         </div>
     </ng-container>
-    <ng-container *ngIf="(!userInfo || userInfo.contentRegistryItem.length==0) && searchBox.value.length>0">
+    <ng-container *ngIf="(!searchResultInfo || searchResultInfo.contentRegistryItem.length==0) && searchBox.value.length>0">
         <div>
             Your image doesnt match with our search or not verified.
         </div>

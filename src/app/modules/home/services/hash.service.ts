@@ -6,20 +6,17 @@ import {ApiUrls} from '../../../constants/apiUrls';
 
 @Injectable({providedIn: 'root'})
 
-export class AuthenticationService{
+export class HashService{
 
     constructor(
         private http:HttpClient
     ){}
 
-    getApiToken(url):Observable<any>{
-        let tokenUrl = "http://localhost:5678"
-
+    public getHashMap(url):Observable<any>{
+        let tokenUrl = ApiUrls.HASH_MAP_URL;//"http://localhost:5678";//"http://10.240.2.76:5678"
         let headers = new HttpHeaders();
         headers = headers.append('Content-Type', 'application/json');
-        
         let options  = {headers,responseType:'text' as 'json'};
-        
         var requestJSON = 
         {
             "url": url
